@@ -59,7 +59,7 @@ func loadEnv() {
 func main() {
 
 	// load our env: to be commented out when we push live
-	loadEnv()
+	// loadEnv()
 
 	// get PORT number from our environmental variable
 	var portNumber = ":" +os.Getenv("PORT")
