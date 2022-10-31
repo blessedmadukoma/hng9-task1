@@ -23,7 +23,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	user.Age = 20
 	user.Backend = true
 	user.Bio = "I am a software engineer with 3+ years experience tasked with demystifying the amazing world of performant systems by designing and building high-quality backend services."
-	user.SlackUsername = "skillz"
+	user.SlackUsername = "blessedmadukoma"
 
 	log.Println(user)
 
