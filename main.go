@@ -7,68 +7,38 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/joho/godotenv"
+	_ "github.com/joho/godotenv/autoload"
 )
 
 type user struct {
-	slackUsername string
-	bio string
-	age int
-	backend bool
+	SlackUsername string `json:"slackUsername"`
+	Bio           string `json:"bio"`
+	Age           int    `json:"age"`
+	Backend       bool   `json:"backend"`
 }
 
-// home handler is unexported due to no other package requiring the handler
-func home(w http.ResponseWriter, r *http.Request) {
+func index(w http.ResponseWriter, r *http.Request) {
 	user := user{}
 
-	user.age = 20
-	user.backend = true
-	user.bio = "I am a software engineer with 3+ years experience tasked with demystifying the amazing world of performant systems by designing and building high-quality backend services."
-	user.slackUsername = "skillz"
+	user.Age = 20
+	user.Backend = true
+	user.Bio = "I am a software engineer with 3+ years experience tasked with demystifying the amazing world of performant systems by designing and building high-quality backend services."
+	user.SlackUsername = "skillz"
 
 	log.Println(user)
 
-	// json.NewEncoder(w).Encode("{slackUsername: 'blessed', bio:'I am a software engineer with 3+ years experience tasked with demystifying the amazing world of performant systems by designing and building high-quality backend services.', 'backend': true, 'age': 20}")
+	w.WriteHeader(http.StatusOK)
 	json.NewEncoder(w).Encode(user)
 	return
-}
-
-func lol(w http.ResponseWriter, r *http.Request) {
-	user := user{}
-
-	user.age = 20
-	user.backend = true
-	user.bio = "I am a software engineer with 3+ years experience tasked with demystifying the amazing world of performant systems by designing and building high-quality backend services."
-	user.slackUsername = "skillz"
-
-	log.Println(user)
-
-	// json.NewEncoder(w).Encode("{slackUsername: 'blessed', bio:'I am a software engineer with 3+ years experience tasked with demystifying the amazing world of performant systems by designing and building high-quality backend services.', 'backend': true, 'age': 20}")
-	json.NewEncoder(w).Encode(user)
-	return
-}
-
-// loadEnv loads our .env file: we will use this to test locally
-func loadEnv() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Unable to load env file")
-	}
 }
 
 func main() {
-
-	// load our env: to be commented out when we push live
-	// loadEnv()
-
 	// get PORT number from our environmental variable
-	var portNumber = ":" +os.Getenv("PORT")
-	// portNumber = ":" + portNumber
+	var portNumber = ":" + os.Getenv("PORT")
 
 	// create a new router
 	router := http.NewServeMux()
-	router.HandleFunc("/", home)
-	router.HandleFunc("/lol", lol)
+	router.HandleFunc("/", index)
 
 	// create our server
 	srv := &http.Server{
