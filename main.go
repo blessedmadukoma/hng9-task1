@@ -19,6 +19,14 @@ type user struct {
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
+
+	// set content types and header
+	w.Header().Add("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+	w.Header().Set("Access-Control-Max-Age", "86400")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, Access-Control-Request-Headers, Access-Control-Request-Method, Connection, Host, Origin, User-Agent, Referer, Cache-Control, X-header")
+
 	user := user{}
 
 	user.Age = 20
