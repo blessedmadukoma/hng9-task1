@@ -12,10 +12,9 @@ import (
 
 type user struct {
 	SlackUsername string `json:"slackUsername"`
-	Backend       bool   `json:"backend"`
-	Age           int    `json:"age"`
 	Bio           string `json:"bio"`
-	
+	Age           int    `json:"age"`
+	Backend       bool   `json:"backend"`
 }
 
 func index(w http.ResponseWriter, r *http.Request) {
