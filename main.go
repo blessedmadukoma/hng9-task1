@@ -8,6 +8,7 @@ import (
 	"os"
 
 	_ "github.com/joho/godotenv/autoload"
+	"github.com/julienschmidt/httprouter"
 )
 
 type user struct {
@@ -37,8 +38,12 @@ func main() {
 	var portNumber = ":" + os.Getenv("PORT")
 
 	// create a new router
-	router := http.NewServeMux()
-	router.HandleFunc("/", index)
+	// router := http.NewServeMux()
+	// router.HandleFunc("/", index)
+
+	router := httprouter.New()
+
+	router.HandlerFunc("GET", "/", index)
 
 	// create our server
 	srv := &http.Server{
